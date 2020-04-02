@@ -1,4 +1,6 @@
 public class Main {
 
-    //test blabalabla
+    public static void main(String[] args) {
+        AccessingDB.listCars();
+    }
 }
