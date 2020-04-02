@@ -10,7 +10,8 @@ public class AccessingDB {
             con = null;
             Statement s = null;
             Class.forName(JDBC_DRIVER);
-            con = DriverManager.getConnection(DATABASE_URL, "root","3201516950e");
+            con = DriverManager.getConnection(DATABASE_URL, "root","Abcd12345");
+            //passwords. emil "3201516950e" - daniel "Abcd12345" - mikkel ""
             s = con.createStatement();
 
             ResultSet rs = s.executeQuery("SELECT carType, carBrand, carModel, licenseplate," +
