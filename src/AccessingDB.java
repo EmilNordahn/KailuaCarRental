@@ -11,7 +11,8 @@ public class AccessingDB {
             con = null;
             Statement s = null;
             Class.forName(JDBC_DRIVER);
-            con = DriverManager.getConnection(DATABASE_URL, "root","3201516950e");
+            con = DriverManager.getConnection(DATABASE_URL, "root","Abcd12345");
+            //passwords - emil 3201516950e - daniel Abcd12345
             s = con.createStatement();
 
             Scanner input = new Scanner(System.in);
@@ -35,8 +36,8 @@ public class AccessingDB {
             String newOdometer = input.next();
 
             s.executeUpdate("INSERT INTO cars (carType, carBrand, carModel, licenseplate, registrationDate, odometer) VALUES" +
-                    "(" + newType + "," + newBrand + "," + newModel + "," + newLicense +
-                    "," + newRegDate + "," + newOdometer + ")");
+                    "('" + newType + "','" + newBrand + "','" + newModel + "','" + newLicense +
+                    "','" + newRegDate + "','" + newOdometer + "')");
 
             s.close();
             con.close();
