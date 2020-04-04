@@ -8,6 +8,6 @@ public class Main {
         AccessingCustomerDB.listCustomers();
         //testpush
         //hello from daniel
-        //Hello again
+        //Hello again for 1000 gang
     }
 }
