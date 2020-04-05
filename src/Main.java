@@ -4,7 +4,8 @@ public class Main {
         //AccessingDB.listCars();
         //AccessingDB.addCar();
         AccessingCustomerDB.listCustomers();
-        AccessingCustomerDB.createNewCustomer();
+        AccessingCustomerDB.updateCustomer();
+        //AccessingCustomerDB.createNewCustomer();
         AccessingCustomerDB.listCustomers();
         //testpush
         //hello from daniel
