@@ -12,7 +12,7 @@ public class AccessingCustomerDB {
         try {
             con = null;
             Statement s = null;
-            Class.forName(JDBC_DRIVER);
+            //Class.forName(JDBC_DRIVER);
             con = DriverManager.getConnection(DATABASE_URL, "root",password);
             //passwords. emil "3201516950e" - daniel "Abcd12345" - mikkel ""
             s = con.createStatement();
@@ -29,18 +29,18 @@ public class AccessingCustomerDB {
         } catch (SQLException sqlException) {
             System.out.println("SQLException");
             System.out.println(sqlException.getMessage());
-        } catch (ClassNotFoundException classNotFoundException) {
+        } /*catch (ClassNotFoundException classNotFoundException) {
             System.out.println("ClassNotFoundException");
             System.out.println(classNotFoundException.getMessage());
             System.exit(1);
-        }
+        }*/
     }
 
     public static void createNewCustomer(){
         try {
             con = null;
             Statement s = null;
-            Class.forName(JDBC_DRIVER);
+            //Class.forName(JDBC_DRIVER);
             con = DriverManager.getConnection(DATABASE_URL, "root",password);
             s = con.createStatement();
 
@@ -77,11 +77,11 @@ public class AccessingCustomerDB {
         } catch (SQLException sqlException) {
             System.out.println("SQLException");
             System.out.println(sqlException.getMessage());
-        } catch (ClassNotFoundException classNotFoundException) {
+        } /*catch (ClassNotFoundException classNotFoundException) {
             System.out.println("ClassNotFoundException");
             System.out.println(classNotFoundException.getMessage());
             System.exit(1);
-        }
+        }*/
     }
 
     public static void updateCustomer() {
@@ -89,7 +89,7 @@ public class AccessingCustomerDB {
         try {
             con = null;
             Statement s = null;
-            Class.forName(JDBC_DRIVER);
+            //Class.forName(JDBC_DRIVER);
             con = DriverManager.getConnection(DATABASE_URL, "root", password);
             s = con.createStatement();
 
@@ -167,7 +167,7 @@ public class AccessingCustomerDB {
                     break;
             }
             System.out.println("Renter's information has been updated to:");
-            //reset resultgrid
+            //reset resultgrid to beginning
             rs = s.executeQuery("SELECT lastname, firstname, mobile, phone, street, zip, email," +
                                 " licensenumber, driverSinceDate FROM renters WHERE renterID = "+chosenRenterID);
             printCustomerList(rs);
@@ -175,11 +175,11 @@ public class AccessingCustomerDB {
         } catch (SQLException sqlException) {
             System.out.println("SQLException");
             System.out.println(sqlException.getMessage());
-        } catch (ClassNotFoundException classNotFoundException) {
+        } /*catch (ClassNotFoundException classNotFoundException) {
             System.out.println("ClassNotFoundException");
             System.out.println(classNotFoundException.getMessage());
             System.exit(1);
-        }
+        }*/
     }
 
     public static void deleteCustomer() {
@@ -187,7 +187,7 @@ public class AccessingCustomerDB {
         try {
             con = null;
             Statement s = null;
-            Class.forName(JDBC_DRIVER);
+            //Class.forName(JDBC_DRIVER);
             con = DriverManager.getConnection(DATABASE_URL, "root", password);
             //passwords. emil "3201516950e" - daniel "Abcd12345" - mikkel ""
             s = con.createStatement();
@@ -214,11 +214,11 @@ public class AccessingCustomerDB {
         } catch (SQLException sqlException) {
             System.out.println("SQLException");
             System.out.println(sqlException.getMessage());
-        } catch (ClassNotFoundException classNotFoundException) {
+        } /*catch (ClassNotFoundException classNotFoundException) {
             System.out.println("ClassNotFoundException");
             System.out.println(classNotFoundException.getMessage());
             System.exit(1);
-        }
+        }*/
     }
 
     public static void printCustomerList(ResultSet rs) {

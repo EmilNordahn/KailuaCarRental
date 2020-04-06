@@ -7,6 +7,8 @@ public class Menu {
             case 1:
                 System.out.println("Cars go vroom");
                 break;
+            case 2:
+
         }
     }
 
