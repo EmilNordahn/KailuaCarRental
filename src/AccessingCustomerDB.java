@@ -3,7 +3,8 @@ import java.util.Scanner;
 
 public class AccessingCustomerDB {
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    static final String DATABASE_URL = "jdbc:mysql://localhost:3306/kailuadatabase";
+    // static final String DATABASE_URL = "jdbc:mysql://localhost:3306/kailuadatabase";
+    static final String DATABASE_URL = "jdbc:mysql://localhost:3306/kailuadatabase?serverTimezone=UTC";
     static Connection con;
 
     public static void listCustomers(){
@@ -11,7 +12,7 @@ public class AccessingCustomerDB {
             con = null;
             Statement s = null;
             Class.forName(JDBC_DRIVER);
-            con = DriverManager.getConnection(DATABASE_URL, "root","Abcd12345");
+            con = DriverManager.getConnection(DATABASE_URL, "root","Mikkel123!");
             //passwords. emil "3201516950e" - daniel "Abcd12345" - mikkel ""
             s = con.createStatement();
 
@@ -39,7 +40,7 @@ public class AccessingCustomerDB {
             con = null;
             Statement s = null;
             Class.forName(JDBC_DRIVER);
-            con = DriverManager.getConnection(DATABASE_URL, "root","Abcd12345");
+            con = DriverManager.getConnection(DATABASE_URL, "root","Mikkel123!");
             //passwords - emil 3201516950e - daniel Abcd12345
             s = con.createStatement();
 
@@ -89,7 +90,7 @@ public class AccessingCustomerDB {
             con = null;
             Statement s = null;
             Class.forName(JDBC_DRIVER);
-            con = DriverManager.getConnection(DATABASE_URL, "root", "Abcd12345");
+            con = DriverManager.getConnection(DATABASE_URL, "root", "Mikkel123!");
             //passwords. emil "3201516950e" - daniel "Abcd12345" - mikkel ""
             s = con.createStatement();
 
