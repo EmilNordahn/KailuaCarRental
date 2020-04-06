@@ -12,7 +12,7 @@ public class Menu {
                 customerMethods();
                 break;
             case 3:
-                //contractMethods();
+                contractMethods();
                 break;
             case 4:
                 break;
@@ -64,6 +64,10 @@ public class Menu {
                 System.out.println("Input wasn't a possible selection. Returning to main menu.");
                 break;
         }
+    }
+
+    public static void contractMethods() {
+        AccessingContractDB.listContracts();
     }
 
     public static int getInt() {

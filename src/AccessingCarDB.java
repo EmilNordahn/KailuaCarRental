@@ -6,7 +6,7 @@ public class AccessingCarDB {
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     static final String DATABASE_URL = "jdbc:mysql://localhost:3306/kailuadatabase?serverTimezone=UTC";
     static Connection con;
-    static final String password = "Mikkel123!";
+    static final String password = "Abcd12345";
     //Passwords: Emil "3201516950e" - Daniel "Abcd12345" - Mikkel ""
 
     public static void listCars(){
