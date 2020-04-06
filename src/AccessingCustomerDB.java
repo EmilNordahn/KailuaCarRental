@@ -171,6 +171,8 @@ public class AccessingCustomerDB {
             rs = s.executeQuery("SELECT lastname, firstname, mobile, phone, street, zip, email," +
                                 " licensenumber, driverSinceDate FROM renters WHERE renterID = "+chosenRenterID);
             printCustomerList(rs);
+            s.close();
+            con.close();
             System.out.println();
         } catch (SQLException sqlException) {
             System.out.println("SQLException");
@@ -211,6 +213,8 @@ public class AccessingCustomerDB {
             } else {
                 System.out.println("No data will be deleted.\n");
             }
+            s.close();
+            con.close();
         } catch (SQLException sqlException) {
             System.out.println("SQLException");
             System.out.println(sqlException.getMessage());
