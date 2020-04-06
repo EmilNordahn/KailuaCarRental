@@ -1,8 +1,6 @@
 import java.sql.*;
 import java.util.Scanner;
 
-//nriougnwseriopfgneiosfgbneipwtnbiqpeabnt
-
 public class AccessingContractDB {
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     static final String DATABASE_URL = "jdbc:mysql://localhost:3306/kailuadatabase?serverTimezone=UTC";
