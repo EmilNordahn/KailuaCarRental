@@ -89,6 +89,7 @@ public class Menu {
                 break;
             case 4:
                 AccessingContractDB.deleteContract();
+                break;
             default:
                 System.out.println("Input wasn't a possible selection. Returning to main menu.");
                 break;

@@ -94,9 +94,40 @@ public class AccessingContractDB {
     }
 
     public static void deleteContract() {
+        System.out.println("Which contract would you like to delete?\nHere's a list of current contracts in the system:");
+        try {
+            con = null;
+            Statement s = null;
+            con = DriverManager.getConnection(DATABASE_URL, "root", password);
+            s = con.createStatement();
 
+            ResultSet rs = s.executeQuery("SELECT contractID, lastname, licenseplate, fromDate, toDate " +
+                    "FROM rentalcontracts JOIN cars USING (carID) JOIN renters USING (renterID) ORDER BY contractID");
+
+            if(rs != null){
+                printContractListID(rs);
+            }
+            System.out.println("Please input the ID of the contract you'd like to delete:");
+            int chosenContractID = Menu.getInt();
+
+            rs = s.executeQuery("SELECT contractID, lastname, licenseplate, fromDate, toDate " +
+                    "FROM rentalcontracts JOIN cars USING (carID) JOIN renters USING (renterID) WHERE contractID = " + chosenContractID);
+            System.out.println("This is the current information of the selected contract:");
+            printContractListID(rs);
+            System.out.println("Are you sure you want to delete this contract?\n1. Yes\n2. No");
+            if (Menu.getInt() == 1) {
+                s.executeUpdate("DELETE FROM rentalcontracts WHERE contractID = "+chosenContractID);
+                System.out.println("Contract has been deleted from the system.\n");
+            } else {
+                System.out.println("No data will be deleted.\n");
+            }
+            s.close();
+            con.close();
+        } catch (SQLException sqlException) {
+            System.out.println("SQLException");
+            System.out.println(sqlException.getMessage());
+        }
     }
-
 
     public static void printContractList(ResultSet rs) {
         try {
@@ -105,6 +136,26 @@ public class AccessingContractDB {
             System.out.printf("|%-12s", "From");
             System.out.printf("|%-12s|\n", "To");
             while (rs.next()) {
+                System.out.printf("|%-20s", rs.getString("lastname"));
+                System.out.printf("|%-14s", rs.getString("licenseplate"));
+                System.out.printf("|%-12s", rs.getString("fromDate"));
+                System.out.printf("|%-12s|\n", rs.getString("toDate"));
+            }
+        } catch (SQLException sqlException) {
+            System.out.println("SQLException");
+            System.out.println(sqlException.getMessage());
+        }
+    }
+
+    public static void printContractListID(ResultSet rs) {
+        try {
+            System.out.printf("|%-3s", "ID");
+            System.out.printf("|%-20s", "Last name");
+            System.out.printf("|%-14s", "License plate");
+            System.out.printf("|%-12s", "From");
+            System.out.printf("|%-12s|\n", "To");
+            while (rs.next()) {
+                System.out.printf("|%-3s", rs.getString("contractID"));
                 System.out.printf("|%-20s", rs.getString("lastname"));
                 System.out.printf("|%-14s", rs.getString("licenseplate"));
                 System.out.printf("|%-12s", rs.getString("fromDate"));
