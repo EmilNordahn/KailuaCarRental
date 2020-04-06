@@ -2,7 +2,7 @@ import java.sql.*;
 import java.util.Date;
 import java.util.Scanner;
 
-public class AccessingDB {
+public class AccessingCarDB {
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     static final String DATABASE_URL = "jdbc:mysql://localhost:3306/kailuadatabase";
     static Connection con;
