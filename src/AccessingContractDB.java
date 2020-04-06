@@ -59,7 +59,7 @@ public class AccessingContractDB {
                 System.out.println("This is the current information of the selected renter:");
                 AccessingCustomerDB.printCustomerList(rs);
             } else {
-                //AccessingCustomerDB.createNewCustomer();
+                AccessingCustomerDB.createNewCustomer();
                 chosenRenterID = AccessingCustomerDB.getLastID();
             }
 
