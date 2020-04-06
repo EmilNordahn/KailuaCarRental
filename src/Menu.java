@@ -32,7 +32,7 @@ public class Menu {
         String pw = console.next();
         AccessingCarDB.setPassword(pw);
         AccessingCustomerDB.setPassword(pw);
-        //AccessingContractDB.setPassword(pw);
+        AccessingContractDB.setPassword(pw);
     }
 
     public static void carMethods() {
