@@ -11,7 +11,7 @@ public class AccessingCustomerDB {
             con = null;
             Statement s = null;
             Class.forName(JDBC_DRIVER);
-            con = DriverManager.getConnection(DATABASE_URL, "root","Abcd12345");
+            con = DriverManager.getConnection(DATABASE_URL, "root","3201516950e");
             //passwords. emil "3201516950e" - daniel "Abcd12345" - mikkel ""
             s = con.createStatement();
 
@@ -39,7 +39,7 @@ public class AccessingCustomerDB {
             con = null;
             Statement s = null;
             Class.forName(JDBC_DRIVER);
-            con = DriverManager.getConnection(DATABASE_URL, "root","Abcd12345");
+            con = DriverManager.getConnection(DATABASE_URL, "root","3201516950e");
             //passwords - emil 3201516950e - daniel Abcd12345
             s = con.createStatement();
 
@@ -89,7 +89,7 @@ public class AccessingCustomerDB {
             con = null;
             Statement s = null;
             Class.forName(JDBC_DRIVER);
-            con = DriverManager.getConnection(DATABASE_URL, "root", "Abcd12345");
+            con = DriverManager.getConnection(DATABASE_URL, "root", "3201516950e");
             //passwords. emil "3201516950e" - daniel "Abcd12345" - mikkel ""
             s = con.createStatement();
 
