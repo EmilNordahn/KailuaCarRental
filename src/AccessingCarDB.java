@@ -6,14 +6,16 @@ public class AccessingCarDB {
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     static final String DATABASE_URL = "jdbc:mysql://localhost:3306/kailuadatabase";
     static Connection con;
+    static final String password = "Abcd12345";
+    //Passwords: Emil "3201516950e" - Daniel "Abcd12345" - Mikkel ""
 
+    //34292314879
     public static void addCar(){
         try {
             con = null;
             Statement s = null;
             Class.forName(JDBC_DRIVER);
-            con = DriverManager.getConnection(DATABASE_URL, "root","3201516950e");
-            //passwords - emil 3201516950e - daniel Abcd12345
+            con = DriverManager.getConnection(DATABASE_URL, "root", password);
             s = con.createStatement();
 
             Scanner input = new Scanner(System.in);
@@ -81,8 +83,7 @@ public class AccessingCarDB {
             con = null;
             Statement s = null;
             //Class.forName(JDBC_DRIVER);
-            con = DriverManager.getConnection(DATABASE_URL, "root", "3201516950e");
-            //passwords: Emil "3201516950e" - Daniel "Abcd12345" - Mikkel ""
+            con = DriverManager.getConnection(DATABASE_URL, "root", password);
             s = con.createStatement();
 
             ResultSet rs = s.executeQuery("SELECT carID, carType, carBrand, carModel, licenseplate " +
@@ -182,8 +183,7 @@ public class AccessingCarDB {
             con = null;
             Statement s = null;
             //Class.forName(JDBC_DRIVER);
-            con = DriverManager.getConnection(DATABASE_URL, "root", "3201516950e");
-            //passwords. emil "3201516950e" - daniel "Abcd12345" - mikkel ""
+            con = DriverManager.getConnection(DATABASE_URL, "root", password);
             s = con.createStatement();
 
             ResultSet rs = s.executeQuery("SELECT carID, carType, carBrand, carModel, licenseplate, registrationDate, odometer FROM cars ORDER BY carID");

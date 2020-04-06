@@ -1,16 +1,13 @@
 public class Main {
-
     public static void main(String[] args) {
-        AccessingDB.deleteCar();
-        //AccessingDB.updateCar();
+        //AccessingCarDB.deleteCar();
+        AccessingCarDB.updateCar();
         //AccessingDB.listCars();
         //AccessingDB.addCar();
         //AccessingCustomerDB.listCustomers();
         //AccessingCustomerDB.updateCustomer();
         //AccessingCustomerDB.createNewCustomer();
         //AccessingCustomerDB.listCustomers();
-        //testpush
-        //hello from daniel
-        //Hello again for 1000 gang
+        //AccessingCustomerDB.deleteCustomer();
     }
 }

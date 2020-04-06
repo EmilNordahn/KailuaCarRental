@@ -5,13 +5,15 @@ public class AccessingCustomerDB {
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     static final String DATABASE_URL = "jdbc:mysql://localhost:3306/kailuadatabase";
     static Connection con;
+    static final String password = "Abcd12345";
+    //passwords. emil "3201516950e" - daniel "Abcd12345" - mikkel ""
 
     public static void listCustomers(){
         try {
             con = null;
             Statement s = null;
-            Class.forName(JDBC_DRIVER);
-            con = DriverManager.getConnection(DATABASE_URL, "root","3201516950e");
+            //Class.forName(JDBC_DRIVER);
+            con = DriverManager.getConnection(DATABASE_URL, "root",password);
             //passwords. emil "3201516950e" - daniel "Abcd12345" - mikkel ""
             s = con.createStatement();
 
@@ -27,20 +29,19 @@ public class AccessingCustomerDB {
         } catch (SQLException sqlException) {
             System.out.println("SQLException");
             System.out.println(sqlException.getMessage());
-        } catch (ClassNotFoundException classNotFoundException) {
+        } /*catch (ClassNotFoundException classNotFoundException) {
             System.out.println("ClassNotFoundException");
             System.out.println(classNotFoundException.getMessage());
             System.exit(1);
-        }
+        }*/
     }
 
     public static void createNewCustomer(){
         try {
             con = null;
             Statement s = null;
-            Class.forName(JDBC_DRIVER);
-            con = DriverManager.getConnection(DATABASE_URL, "root","3201516950e");
-            //passwords - emil 3201516950e - daniel Abcd12345
+            //Class.forName(JDBC_DRIVER);
+            con = DriverManager.getConnection(DATABASE_URL, "root",password);
             s = con.createStatement();
 
             Scanner console = new Scanner(System.in);
@@ -76,11 +77,11 @@ public class AccessingCustomerDB {
         } catch (SQLException sqlException) {
             System.out.println("SQLException");
             System.out.println(sqlException.getMessage());
-        } catch (ClassNotFoundException classNotFoundException) {
+        } /*catch (ClassNotFoundException classNotFoundException) {
             System.out.println("ClassNotFoundException");
             System.out.println(classNotFoundException.getMessage());
             System.exit(1);
-        }
+        }*/
     }
 
     public static void updateCustomer() {
@@ -88,24 +89,14 @@ public class AccessingCustomerDB {
         try {
             con = null;
             Statement s = null;
-            Class.forName(JDBC_DRIVER);
-            con = DriverManager.getConnection(DATABASE_URL, "root", "3201516950e");
-            //passwords. emil "3201516950e" - daniel "Abcd12345" - mikkel ""
+            //Class.forName(JDBC_DRIVER);
+            con = DriverManager.getConnection(DATABASE_URL, "root", password);
             s = con.createStatement();
 
             ResultSet rs = s.executeQuery("SELECT renterID, lastname, firstname, mobile FROM renters ORDER BY renterID");
 
             if (rs != null) {
-                System.out.printf("|%-3s", "ID");
-                System.out.printf("|%-20s", "Last name");
-                System.out.printf("|%-20s", "First name");
-                System.out.printf("|%-10s|\n", "Mobile");
-                while(rs.next()) {
-                    System.out.printf("|%-3s", rs.getString("renterID"));
-                    System.out.printf("|%-20s", rs.getString("lastname"));
-                    System.out.printf("|%-20s", rs.getString("firstname"));
-                    System.out.printf("|%-10s|\n", rs.getString("mobile"));
-                }
+                printCustomerListShort(rs);
             }
             System.out.println("Please input the ID of the renter you'd like to change information for:");
             int chosenRenterID = Menu.getInt();
@@ -176,7 +167,7 @@ public class AccessingCustomerDB {
                     break;
             }
             System.out.println("Renter's information has been updated to:");
-            //reset resultgrid
+            //reset resultgrid to beginning
             rs = s.executeQuery("SELECT lastname, firstname, mobile, phone, street, zip, email," +
                                 " licensenumber, driverSinceDate FROM renters WHERE renterID = "+chosenRenterID);
             printCustomerList(rs);
@@ -184,11 +175,50 @@ public class AccessingCustomerDB {
         } catch (SQLException sqlException) {
             System.out.println("SQLException");
             System.out.println(sqlException.getMessage());
-        } catch (ClassNotFoundException classNotFoundException) {
+        } /*catch (ClassNotFoundException classNotFoundException) {
             System.out.println("ClassNotFoundException");
             System.out.println(classNotFoundException.getMessage());
             System.exit(1);
-        }
+        }*/
+    }
+
+    public static void deleteCustomer() {
+        System.out.println("Which renter's information would you like to delete?\nHere's a list of current renters in the system:");
+        try {
+            con = null;
+            Statement s = null;
+            //Class.forName(JDBC_DRIVER);
+            con = DriverManager.getConnection(DATABASE_URL, "root", password);
+            //passwords. emil "3201516950e" - daniel "Abcd12345" - mikkel ""
+            s = con.createStatement();
+
+            ResultSet rs = s.executeQuery("SELECT renterID, lastname, firstname, mobile, phone, street, zip, email, " +
+                                          "licensenumber, driverSinceDate FROM renters ORDER BY renterID");
+
+            if (rs != null) {
+                printCustomerListShort(rs);
+            }
+            System.out.println("Please input the ID of the renter you'd like to delete:");
+            int chosenRenterID = Menu.getInt();
+            rs = s.executeQuery("SELECT lastname, firstname, mobile, phone, street, zip, email," +
+                    " licensenumber, driverSinceDate FROM renters WHERE renterID = " + chosenRenterID);
+            System.out.println("This is the current information of the selected renter:");
+            printCustomerList(rs);
+            System.out.println("Are you sure you want to delete this renter?\n1. Yes\n2. No");
+            if (Menu.getInt() == 1) {
+                s.executeUpdate("DELETE FROM renters WHERE renterID = "+chosenRenterID);
+                System.out.println("Renter has been deleted from the system.\n");
+            } else {
+                System.out.println("No data will be deleted.\n");
+            }
+        } catch (SQLException sqlException) {
+            System.out.println("SQLException");
+            System.out.println(sqlException.getMessage());
+        } /*catch (ClassNotFoundException classNotFoundException) {
+            System.out.println("ClassNotFoundException");
+            System.out.println(classNotFoundException.getMessage());
+            System.exit(1);
+        }*/
     }
 
     public static void printCustomerList(ResultSet rs) {
@@ -235,6 +265,24 @@ public class AccessingCustomerDB {
                                 "('" + zip + "','" + city + "','" + country + "')");
             } else { //if exists, no more zip input is needed
                 System.out.println("This zip already exists in the system. You don't need to input more location information");
+            }
+        } catch (SQLException sqlException) {
+            System.out.println("SQLException");
+            System.out.println(sqlException.getMessage());
+        }
+    }
+
+    public static void printCustomerListShort(ResultSet rs) {
+        try {
+            System.out.printf("|%-3s", "ID");
+            System.out.printf("|%-20s", "Last name");
+            System.out.printf("|%-20s", "First name");
+            System.out.printf("|%-10s|\n", "Mobile");
+            while (rs.next()) {
+                System.out.printf("|%-3s", rs.getString("renterID"));
+                System.out.printf("|%-20s", rs.getString("lastname"));
+                System.out.printf("|%-20s", rs.getString("firstname"));
+                System.out.printf("|%-10s|\n", rs.getString("mobile"));
             }
         } catch (SQLException sqlException) {
             System.out.println("SQLException");
