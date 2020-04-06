@@ -30,7 +30,7 @@ public class Menu {
         System.out.println("Indtast password");
         Scanner console = new Scanner(System.in);
         String pw = console.next();
-        //AccessingCarDB.setPassword(pw);
+        AccessingCarDB.setPassword(pw);
         AccessingCustomerDB.setPassword(pw);
         //AccessingContractDB.setPassword(pw);
     }
