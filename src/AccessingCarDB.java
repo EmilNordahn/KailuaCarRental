@@ -9,6 +9,7 @@ public class AccessingCarDB {
     static final String password = "Abcd12345";
     //Passwords: Emil "3201516950e" - Daniel "Abcd12345" - Mikkel ""
 
+    //34292314879
     public static void addCar(){
         try {
             con = null;
