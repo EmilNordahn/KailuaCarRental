@@ -4,9 +4,9 @@ import java.util.Scanner;
 
 public class AccessingCarDB {
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    static final String DATABASE_URL = "jdbc:mysql://localhost:3306/kailuadatabase";
+    static final String DATABASE_URL = "jdbc:mysql://localhost:3306/kailuadatabase?serverTimezone=UTC";
     static Connection con;
-    static final String password = "3201516950e";
+    static final String password = "Mikkel123!";
     //Passwords: Emil "3201516950e" - Daniel "Abcd12345" - Mikkel ""
 
     public static void listCars(){
