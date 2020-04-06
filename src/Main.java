@@ -1,7 +1,7 @@
 public class Main {
 
     public static void main(String[] args) {
-        AccessingDB.deleteCar();
+        //AccessingDB.deleteCar();
         //AccessingDB.updateCar();
         //AccessingDB.listCars();
         //AccessingDB.addCar();
