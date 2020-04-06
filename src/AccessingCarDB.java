@@ -10,6 +10,28 @@ public class AccessingCarDB {
     //Passwords: Emil "3201516950e" - Daniel "Abcd12345" - Mikkel ""
 
     //34292314879
+
+    public static void listCars(){
+        try{
+            con = null;
+            Statement s = null;
+            con = DriverManager.getConnection(DATABASE_URL, "root", password);
+            s = con.createStatement();
+
+            ResultSet rs = s.executeQuery("SELECT carID, carType, carBrand, carModel, licenseplate, registrationDate, odometer FROM cars ORDER BY carID");
+
+            if(rs != null){
+                printCarList(rs);
+            }
+
+            s.close();
+            con.close();
+
+        } catch (SQLException sqlException){
+            System.out.println("SQLException\n" + sqlException.getMessage());
+        }
+    }
+
     public static void addCar(){
         try {
             con = null;
@@ -157,7 +179,8 @@ public class AccessingCarDB {
                 rs = s.executeQuery("SELECT carType, carBrand, carModel, licenseplate, registrationDate, odometer FROM cars WHERE carID = " + chosenCarID);
                 printCarList(rs);
             }
-
+            s.close();
+            con.close();
             //Bugged, hvis man siger efter første run ændrer den ikke continueSelection til 0 når man når til det 2. gang
             /*System.out.println("Would you like to change anything else? \n1. yes \n0. No");
             int continueSelection = Menu.getInt();
@@ -224,7 +247,8 @@ public class AccessingCarDB {
                     }
                 }
             }
-
+            s.close();
+            con.close();
         } catch (SQLException sqlException){
             System.out.println("SQLException\n" + sqlException.getMessage());
         }/* catch (ClassNotFoundException classNotFoundException){
