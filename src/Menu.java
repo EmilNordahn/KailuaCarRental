@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class Menu {
-    public static void MenuSelection() {
+    public static void menuSelection() {
         System.out.println("What would you like to work with?\n1. Cars\n2. Customers\n3. Rental contracts\n4. Exit program");
         int menuChoice = getInt();
         switch(menuChoice) {
@@ -19,6 +19,10 @@ public class Menu {
             default:
                 System.out.println("Input wasn't a possible selection. Please try again.");
                 menuChoice = getInt();
+        }
+        System.out.println("\nWould you like to do anything else?\n1. Yes\n2. No");
+        if (getInt() == 1) {
+            menuSelection();
         }
     }
 
