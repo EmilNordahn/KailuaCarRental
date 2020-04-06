@@ -89,32 +89,73 @@ public class AccessingContractDB {
 
     }
 
-    public static void updateContract() {
+    public static void updateContract(){
         System.out.println("Which contract would you like to change?\nHere's a list of the contracts currently in the system:");
 
-        try{
+        try {
             con = null;
             Statement s = null;
             con = DriverManager.getConnection(DATABASE_URL, "root", password);
             s = con.createStatement();
 
-            ResultSet rs = s.executeQuery("SELECT contractID, renterId, fromDate, toDate, maxKM, carID FROM rentalcontracts");
+            ResultSet rs = s.executeQuery("SELECT contractID, lastname, licenseplate, fromDate, toDate " +
+                    "FROM rentalcontracts JOIN cars USING (carID) JOIN renters USING (renterID) ORDER BY contractID");
 
-            if(rs != null){
-                listContracts();
-                System.out.println("Which contract would you like to change? (Type 0 to return)");
+            if (rs != null) {
+                printContractListID(rs);
+                System.out.println("Which contract would you like to change?");
                 int chosenContractID = Menu.getInt();
 
-                if(chosenContractID !=0){
-                    rs = s.executeQuery("SELECT renterID, fromDate, toDate, maxKM, carID FROM rentalcontracts WHERE contractID = " + chosenContractID);
+                rs = s.executeQuery("SELECT contractID, carID, renterID, fromDate, toDate, maxKM FROM rentalcontracts " +
+                        "JOIN cars USING (carID) JOIN renters USING (renterID) WHERE contractID = " + chosenContractID + " ORDER BY contractID");
+                System.out.println("This is the selected contract");
+                printContractListCarRenterID(rs);
 
-                    System.out.println("This is the selected contract");
+                System.out.println("What would you like to change? (Type 0 to return)");
+                int editSelection = Menu.getInt();
+                boolean editFlag = true;
+                Scanner console = new Scanner(System.in);
 
+                while (editFlag){
+                    switch (editSelection){
+                        case 1:
+                            System.out.println("What is the new car ID?");
+                            s.executeUpdate("UPDATE rentalcontracts SET carID = " + Menu.getInt() + " WHERE contractID = " + chosenContractID);
+                            editFlag = false;
+                            break;
+                        case 2:
+                            System.out.println("What is the new renter ID?");
+                            s.executeUpdate("UPDATE rentalcontracts SET renterID = " + Menu.getInt() + " WHERE contractID = " + chosenContractID);
+                            editFlag = false;
+                            break;
+                        case 3:
+                            System.out.println("What is the new start date? (YYYY-MM-DD)");
+                            String newFrom = console.nextLine();
+                            s.executeUpdate("UPDATE rentalcontracts SET fromDate = " + newFrom + " WHERE contractID = " + chosenContractID);
+                            break;
+                        case 4:
+                            System.out.println("What is the new end date? (YYYY-MM-DD");
+                            String newTo = console.nextLine();
+                            s.executeUpdate("UPDATE rentalcontracts SET toDate = " + newTo + " WHERE contractID = " + chosenContractID);
+                            break;
+                        case 5:
+                            System.out.println("What is the new maximum kilometers driven?");
+                            s.executeUpdate("UPDATE rentalcontracts SET maxKM = " + Menu.getInt() + " WHERE contractID = " + chosenContractID);
+                            break;
+                        case 0:
+                            System.out.println("Nothing has been changed\n");
+                            editFlag = false;
+                            break;
+                        default:
+                            System.out.println("Please type a number between 1-5");
+                            break;
+                    }
                 }
-            }
 
-        } catch (SQLException sqlException){
-            System.out.println("SQLException\n" + sqlException.getMessage());
+            }
+        } catch (SQLException sqlException) {
+            System.out.println("SQLException");
+            System.out.println(sqlException.getMessage());
         }
     }
 
@@ -135,7 +176,7 @@ public class AccessingContractDB {
             System.out.println("Please input the ID of the contract you'd like to delete:");
             int chosenContractID = Menu.getInt();
 
-            rs = s.executeQuery("SELECT contractID, lastname, licenseplate, fromDate, toDate " +
+            rs = s.executeQuery("SELECT carID, renterID, contractID, lastname, licenseplate, fromDate, toDate " +
                     "FROM rentalcontracts JOIN cars USING (carID) JOIN renters USING (renterID) WHERE contractID = " + chosenContractID);
             System.out.println("This is the current information of the selected contract:");
             printContractListID(rs);
@@ -165,6 +206,28 @@ public class AccessingContractDB {
                 System.out.printf("|%-14s", rs.getString("licenseplate"));
                 System.out.printf("|%-12s", rs.getString("fromDate"));
                 System.out.printf("|%-12s|\n", rs.getString("toDate"));
+            }
+        } catch (SQLException sqlException) {
+            System.out.println("SQLException");
+            System.out.println(sqlException.getMessage());
+        }
+    }
+
+    public static void printContractListCarRenterID(ResultSet rs){
+        try{
+            System.out.printf("|%-15s", "Contract ID");
+            System.out.printf("|%-15s", "1. Car ID");
+            System.out.printf("|%-15s", "2. Renter ID");
+            System.out.printf("|%-12s", "3. From");
+            System.out.printf("|%-12s", "4. To");
+            System.out.printf("|%-15s|\n", "5. Kilometers");
+            while (rs.next()){
+                System.out.printf("|%-15s", rs.getString("contractID"));
+                System.out.printf("|%-15s", rs.getString("carID"));
+                System.out.printf("|%-15s", rs.getString("renterID"));
+                System.out.printf("|%-12s", rs.getString("fromDate"));
+                System.out.printf("|%-12s", rs.getString("toDate"));
+                System.out.printf("|%-15s|\n", rs.getString("maxKM"));
             }
         } catch (SQLException sqlException) {
             System.out.println("SQLException");
