@@ -26,6 +26,15 @@ public class Menu {
         }
     }
 
+    public static void setPasswords(){
+        System.out.println("Indtast password");
+        Scanner console = new Scanner(System.in);
+        String pw = console.next();
+        AccessingCarDB.setPassword(pw);
+        AccessingCustomerDB.setPassword(pw);
+        //AccessingContractDB.setPassword(pw);
+    }
+
     public static void carMethods() {
         System.out.println("What would you like to do with cars?\n1. See list of cars\n2. Update car info\n3. Create car\n4. Delete car");
         switch(getInt()) {
