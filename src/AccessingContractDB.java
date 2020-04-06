@@ -4,7 +4,11 @@ public class AccessingContractDB {
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     static final String DATABASE_URL = "jdbc:mysql://localhost:3306/kailuadatabase?serverTimezone=UTC";
     static Connection con;
-    static final String password = "Abcd12345";
+    static String password;
+
+    public static void setPassword(String pw){
+        password = pw;
+    }
 
     public static void listContracts() {
         try{
