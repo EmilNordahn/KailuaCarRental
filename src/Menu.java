@@ -76,7 +76,23 @@ public class Menu {
     }
 
     public static void contractMethods() {
-        AccessingContractDB.listContracts();
+        System.out.println("What would you like to do with contracts?\n1. See list of contracts\n2. Update contract info\n3. Create contract\n4. Delete contract");
+        switch(getInt()) {
+            case 1:
+                AccessingContractDB.listContracts();
+                break;
+            case 2:
+                AccessingContractDB.updateContract();
+                break;
+            case 3:
+                AccessingContractDB.createContract();
+                break;
+            case 4:
+                AccessingContractDB.deleteContract();
+            default:
+                System.out.println("Input wasn't a possible selection. Returning to main menu.");
+                break;
+        }
     }
 
     public static int getInt() {

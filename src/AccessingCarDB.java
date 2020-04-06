@@ -45,22 +45,22 @@ public class AccessingCarDB {
             Scanner input = new Scanner(System.in);
 
             System.out.println("What type is the new car?");
-            String newType = input.next();
+            String newType = input.nextLine();
 
             System.out.println("What brand?");
-            String newBrand = input.next();
+            String newBrand = input.nextLine();
 
             System.out.println("What Model?");
-            String newModel = input.next();
+            String newModel = input.nextLine();
 
             System.out.println("What is the license plate?");
-            String newLicense = input.next();
+            String newLicense = input.nextLine();
 
             System.out.println("What is the registration date (yyyy-mm-dd)");
-            String newRegDate = input.next();
+            String newRegDate = input.nextLine();
 
             System.out.println("How many kilometers has the car driven?");
-            String newOdometer = input.next();
+            String newOdometer = input.nextLine();
 
             s.executeUpdate("INSERT INTO cars (carType, carBrand, carModel, licenseplate, registrationDate, odometer) VALUES" +
                     "('" + newType + "','" + newBrand + "','" + newModel + "','" + newLicense +
@@ -80,6 +80,7 @@ public class AccessingCarDB {
 
     public static void printCarList(ResultSet rs){
         try {
+            System.out.printf("|%-3s", "ID");
             System.out.printf("|%-10s", "Type");
             System.out.printf("|%-20s", "Brand");
             System.out.printf("|%-20s", "Model");
@@ -88,6 +89,7 @@ public class AccessingCarDB {
             System.out.printf("|%-20s|\n", "Kilometers Driven");
 
             while(rs.next()){
+                System.out.printf("|%-3s", rs.getString("carID"));
                 System.out.printf("|%-10s", rs.getString("carType"));
                 System.out.printf("|%-20s", rs.getString("carBrand"));
                 System.out.printf("|%-20s", rs.getString("carModel"));

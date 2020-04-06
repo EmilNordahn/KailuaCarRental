@@ -297,4 +297,21 @@ public class AccessingCustomerDB {
             System.out.println(sqlException.getMessage());
         }
     }
+
+    public static int getLastID() {
+        int lastID = 1;
+        try {
+            Statement s = null;
+            con = DriverManager.getConnection(DATABASE_URL, "root", password);
+            s = con.createStatement();
+            ResultSet rs = s.executeQuery("SELECT renterID FROM renters ORDER BY renterID");
+            while (rs.next()) {
+                lastID = rs.getInt("renterID");
+            }
+        } catch (SQLException sqlException) {
+            System.out.println("SQLException");
+            System.out.println(sqlException.getMessage());
+        }
+        return lastID;
+    }
 }
