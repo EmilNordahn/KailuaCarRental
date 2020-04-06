@@ -90,7 +90,32 @@ public class AccessingContractDB {
     }
 
     public static void updateContract() {
+        System.out.println("Which contract would you like to change?\nHere's a list of the contracts currently in the system:");
 
+        try{
+            con = null;
+            Statement s = null;
+            con = DriverManager.getConnection(DATABASE_URL, "root", password);
+            s = con.createStatement();
+
+            ResultSet rs = s.executeQuery("SELECT contractID, renterId, fromDate, toDate, maxKM, carID FROM rentalcontracts");
+
+            if(rs != null){
+                listContracts();
+                System.out.println("Which contract would you like to change? (Type 0 to return)");
+                int chosenContractID = Menu.getInt();
+
+                if(chosenContractID !=0){
+                    rs = s.executeQuery("SELECT renterID, fromDate, toDate, maxKM, carID FROM rentalcontracts WHERE contractID = " + chosenContractID);
+
+                    System.out.println("This is the selected contract");
+
+                }
+            }
+
+        } catch (SQLException sqlException){
+            System.out.println("SQLException\n" + sqlException.getMessage());
+        }
     }
 
     public static void deleteContract() {
