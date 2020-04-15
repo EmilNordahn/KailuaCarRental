@@ -132,15 +132,18 @@ public class AccessingContractDB {
                             System.out.println("What is the new start date? (YYYY-MM-DD)");
                             String newFrom = console.nextLine();
                             s.executeUpdate("UPDATE rentalcontracts SET fromDate = " + newFrom + " WHERE contractID = " + chosenContractID);
+                            editFlag = false;
                             break;
                         case 4:
                             System.out.println("What is the new end date? (YYYY-MM-DD");
                             String newTo = console.nextLine();
                             s.executeUpdate("UPDATE rentalcontracts SET toDate = " + newTo + " WHERE contractID = " + chosenContractID);
+                            editFlag = false;
                             break;
                         case 5:
                             System.out.println("What is the new maximum kilometers driven?");
                             s.executeUpdate("UPDATE rentalcontracts SET maxKM = " + Menu.getInt() + " WHERE contractID = " + chosenContractID);
+                            editFlag = false;
                             break;
                         case 0:
                             System.out.println("Nothing has been changed\n");

@@ -180,7 +180,7 @@ public class AccessingCarDB {
                 }
                 System.out.println("The car's information has been changed to: ");
 
-                rs = s.executeQuery("SELECT carType, carBrand, carModel, licenseplate, registrationDate, odometer FROM cars WHERE carID = " + chosenCarID);
+                rs = s.executeQuery("SELECT carID, carType, carBrand, carModel, licenseplate, registrationDate, odometer FROM cars WHERE carID = " + chosenCarID);
                 printCarList(rs);
             }
             s.close();
@@ -233,7 +233,7 @@ public class AccessingCarDB {
             System.out.println("Please input the ID of the car you wish to delete: (type 0 to return) ");
             int chosenCarID = Menu.getInt();
             if(chosenCarID != 0) {
-                rs = s.executeQuery("SELECT carType, carBrand, carModel, licenseplate, registrationDate, odometer FROM cars WHERE carID = " +
+                rs = s.executeQuery("SELECT carID, carType, carBrand, carModel, licenseplate, registrationDate, odometer FROM cars WHERE carID = " +
                         chosenCarID);
 
                 System.out.println("This is the car selected for deletion");
