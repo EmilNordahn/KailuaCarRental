@@ -108,28 +108,13 @@ public class AccessingCarDB {
         try{
             con = null;
             Statement s = null;
-            //Class.forName(JDBC_DRIVER);
             con = DriverManager.getConnection(DATABASE_URL, "root", password);
             s = con.createStatement();
 
             ResultSet rs = s.executeQuery("SELECT carID, carType, carBrand, carModel, licenseplate " +
                                             "FROM cars ORDER BY carID");
 
-            if(rs != null){
-                System.out.printf("|%-3s", "ID");
-                System.out.printf("|%-10s", "Type");
-                System.out.printf("|%-20s", "Brand");
-                System.out.printf("|%-20s", "Model");
-                System.out.printf("|%-20s|\n", "License Plate");
-
-                while(rs.next()){
-                    System.out.printf("|%-3s", rs.getString("carID"));
-                    System.out.printf("|%-10s", rs.getString("carType"));
-                    System.out.printf("|%-20s", rs.getString("carBrand"));
-                    System.out.printf("|%-20s", rs.getString("carModel"));
-                    System.out.printf("|%-20s|\n", rs.getString("licenseplate"));
-                }
-            }
+            checkResultSet(rs);
 
             System.out.println("Please input the ID of the car you'd like to edit (Type 0 to return)");
             int chosenCarID = Menu.getInt();
@@ -185,23 +170,28 @@ public class AccessingCarDB {
             }
             s.close();
             con.close();
-            //Bugged, hvis man siger efter første run ændrer den ikke continueSelection til 0 når man når til det 2. gang
-            /*System.out.println("Would you like to change anything else? \n1. yes \n0. No");
-            int continueSelection = Menu.getInt();
-            while(continueSelection != 0){
-                if(continueSelection == 1){
-                    AccessingDB.updateCar();
-                } else{
-                    System.out.println("Please type either \"1\" for yes or \"0\" for no");
-                    continueSelection = Menu.getInt();
-                }
-            }*/
 
         } catch (SQLException sqlexception){
             System.out.println("SQLException\n" + sqlexception.getMessage());
-        } /*catch (ClassNotFoundException classNotFoundException){
-            System.out.println("ClassNotFoundException\n" + classNotFoundException.getMessage());
-        }*/
+        }
+    }
+
+    public static void checkResultSet(ResultSet rs) throws SQLException {
+        if(rs != null){
+            System.out.printf("|%-3s", "ID");
+            System.out.printf("|%-10s", "Type");
+            System.out.printf("|%-20s", "Brand");
+            System.out.printf("|%-20s", "Model");
+            System.out.printf("|%-20s|\n", "License Plate");
+
+            while(rs.next()){
+                System.out.printf("|%-3s", rs.getString("carID"));
+                System.out.printf("|%-10s", rs.getString("carType"));
+                System.out.printf("|%-20s", rs.getString("carBrand"));
+                System.out.printf("|%-20s", rs.getString("carModel"));
+                System.out.printf("|%-20s|\n", rs.getString("licenseplate"));
+            }
+        }
     }
 
     public static void deleteCar(){
@@ -209,26 +199,12 @@ public class AccessingCarDB {
         try{
             con = null;
             Statement s = null;
-            //Class.forName(JDBC_DRIVER);
             con = DriverManager.getConnection(DATABASE_URL, "root", password);
             s = con.createStatement();
 
             ResultSet rs = s.executeQuery("SELECT carID, carType, carBrand, carModel, licenseplate, registrationDate, odometer FROM cars ORDER BY carID");
 
-            if(rs != null){
-                System.out.printf("|%-3s", "ID");
-                System.out.printf("|%-10s", "Type");
-                System.out.printf("|%-20s", "Brand");
-                System.out.printf("|%-20s", "Model");
-                System.out.printf("|%-20s|\n", "License Plate");
-                while(rs.next()){
-                    System.out.printf("|%-3s", rs.getString("carID"));
-                    System.out.printf("|%-10s", rs.getString("carType"));
-                    System.out.printf("|%-20s", rs.getString("carBrand"));
-                    System.out.printf("|%-20s", rs.getString("carModel"));
-                    System.out.printf("|%-20s|\n", rs.getString("licenseplate"));
-                }
-            }
+            checkResultSet(rs);
 
             System.out.println("Please input the ID of the car you wish to delete: (type 0 to return) ");
             int chosenCarID = Menu.getInt();
@@ -255,9 +231,7 @@ public class AccessingCarDB {
             con.close();
         } catch (SQLException sqlException){
             System.out.println("SQLException\n" + sqlException.getMessage());
-        }/* catch (ClassNotFoundException classNotFoundException){
-            System.out.println("ClassNotFoundException\n" + classNotFoundException.getMessage());
-        }*/
+        }
     }
 
 }
