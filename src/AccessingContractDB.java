@@ -86,7 +86,6 @@ public class AccessingContractDB {
             System.out.println("SQLException");
             System.out.println(sqlException.getMessage());
         }
-
     }
 
     public static void updateContract(){
@@ -103,15 +102,15 @@ public class AccessingContractDB {
 
             if (rs != null) {
                 printContractListID(rs);
-                System.out.println("Which contract would you like to change?");
+                System.out.println("Please input the ID of the contract you would like to change.");
                 int chosenContractID = Menu.getInt();
 
                 rs = s.executeQuery("SELECT contractID, carID, renterID, fromDate, toDate, maxKM FROM rentalcontracts " +
                         "JOIN cars USING (carID) JOIN renters USING (renterID) WHERE contractID = " + chosenContractID + " ORDER BY contractID");
-                System.out.println("This is the selected contract");
+                System.out.println("This is the current information of the selected contract:");
                 printContractListCarRenterID(rs);
 
-                System.out.println("What would you like to change? (Type 0 to return)");
+                System.out.println("Please input the number of the column you would like to change (Type 0 to return)");
                 int editSelection = Menu.getInt();
                 boolean editFlag = true;
                 Scanner console = new Scanner(System.in);
@@ -129,24 +128,24 @@ public class AccessingContractDB {
                             editFlag = false;
                             break;
                         case 3:
-                            System.out.println("What is the new start date? (YYYY-MM-DD)");
+                            System.out.println("What is the new start date? (Input must be YYYY-MM-DD)");
                             String newFrom = console.nextLine();
                             s.executeUpdate("UPDATE rentalcontracts SET fromDate = " + newFrom + " WHERE contractID = " + chosenContractID);
                             editFlag = false;
                             break;
                         case 4:
-                            System.out.println("What is the new end date? (YYYY-MM-DD");
+                            System.out.println("What is the new end date? (Input must be YYYY-MM-DD");
                             String newTo = console.nextLine();
                             s.executeUpdate("UPDATE rentalcontracts SET toDate = " + newTo + " WHERE contractID = " + chosenContractID);
                             editFlag = false;
                             break;
                         case 5:
-                            System.out.println("What is the new maximum kilometers driven?");
+                            System.out.println("What is the new maximum kilometers allowed to be driven?");
                             s.executeUpdate("UPDATE rentalcontracts SET maxKM = " + Menu.getInt() + " WHERE contractID = " + chosenContractID);
                             editFlag = false;
                             break;
                         case 0:
-                            System.out.println("Nothing has been changed\n");
+                            System.out.println("Nothing has been changed.\n");
                             editFlag = false;
                             break;
                         default:
