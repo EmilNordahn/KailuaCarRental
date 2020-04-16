@@ -38,33 +38,10 @@ public class AccessingContractDB {
             con = DriverManager.getConnection(DATABASE_URL, "root",password);
             s = con.createStatement();
 
-            System.out.println("Does the customer already exist in the system?\n1. Yes\n0. No");
-            int existSelection = Menu.getInt();
-            int chosenRenterID;
-            int chosenCarID;
+            int chosenRenterID = selectCustomer(s);
+            int chosenCarID = selectCar();
+
             Scanner console = new Scanner(System.in);
-
-            if (existSelection == 1) {
-                ResultSet rs = s.executeQuery("SELECT renterID, lastname, firstname, mobile FROM renters ORDER BY renterID");
-
-                if (rs != null) {
-                    AccessingCustomerDB.printCustomerListShort(rs);
-                }
-
-                System.out.println("Enter the ID of the renter you'd like to attach to the contract");
-                chosenRenterID = Menu.getInt();
-                rs = s.executeQuery("SELECT lastname, firstname, mobile, phone, street, zip, email," +
-                        " licensenumber, driverSinceDate FROM renters WHERE renterID = " + chosenRenterID);
-                System.out.println("This is the current information of the selected renter:");
-                AccessingCustomerDB.printCustomerList(rs);
-            } else {
-                AccessingCustomerDB.createNewCustomer();
-                chosenRenterID = AccessingCustomerDB.getLastID();
-            }
-
-            System.out.println("Select which car");
-            AccessingCarDB.listCars();
-            chosenCarID = Menu.getInt();
 
             System.out.println("From which date does the contract start? (Type YYYY-MM-DD)");
             String fromDate = console.nextLine();
@@ -79,6 +56,7 @@ public class AccessingContractDB {
                     "VALUES ('" + chosenRenterID + "','" + fromDate + "','" + toDate + "','" + maxKM +
             "','" + chosenCarID + "')");
 
+            System.out.println("Contract has been saved!");
             s.close();
             con.close();
         } catch (SQLException sqlException) {
@@ -89,7 +67,7 @@ public class AccessingContractDB {
 
     public static void updateContract(){
         System.out.println("Which contract would you like to change?\nHere's a list of the contracts currently in the system:");
-
+        int chosenContractID = 1;
         try {
             con = null;
             Statement s = null;
@@ -102,7 +80,7 @@ public class AccessingContractDB {
             if (rs != null) {
                 printContractListID(rs);
                 System.out.println("Please input the ID of the contract you would like to change.");
-                int chosenContractID = Menu.getInt();
+                chosenContractID = Menu.getInt();
 
                 rs = s.executeQuery("SELECT contractID, carID, renterID, fromDate, toDate, maxKM FROM rentalcontracts " +
                         "JOIN cars USING (carID) JOIN renters USING (renterID) WHERE contractID = " + chosenContractID + " ORDER BY contractID");
@@ -110,6 +88,7 @@ public class AccessingContractDB {
                 printContractListCarRenterID(rs);
 
                 System.out.println("Please input the number of the column you would like to change (Type 0 to return)");
+                System.out.println("Please note that Contract ID cannot be changed.");
                 int editSelection = Menu.getInt();
                 boolean editFlag = true;
                 Scanner console = new Scanner(System.in);
@@ -118,12 +97,12 @@ public class AccessingContractDB {
                     switch (editSelection){
                         case 1:
                             System.out.println("What is the new car ID?");
-                            s.executeUpdate("UPDATE rentalcontracts SET carID = " + Menu.getInt() + " WHERE contractID = " + chosenContractID);
+                            s.executeUpdate("UPDATE rentalcontracts SET carID = " + selectCar() + " WHERE contractID = " + chosenContractID);
                             editFlag = false;
                             break;
                         case 2:
                             System.out.println("What is the new renter ID?");
-                            s.executeUpdate("UPDATE rentalcontracts SET renterID = " + Menu.getInt() + " WHERE contractID = " + chosenContractID);
+                            s.executeUpdate("UPDATE rentalcontracts SET renterID = " + selectCustomer(s) + " WHERE contractID = " + chosenContractID);
                             editFlag = false;
                             break;
                         case 3:
@@ -152,12 +131,51 @@ public class AccessingContractDB {
                             break;
                     }
                 }
+            }
+            rs = s.executeQuery("SELECT contractID, carID, renterID, fromDate, toDate, maxKM FROM rentalcontracts " +
+                    "JOIN cars USING (carID) JOIN renters USING (renterID) WHERE contractID = " + chosenContractID + " ORDER BY contractID");
+            System.out.println("Contract has been changed to:");
+            printContractListCarRenterID(rs);
+        } catch (SQLException sqlException) {
+            System.out.println("SQLException");
+            System.out.println(sqlException.getMessage());
+        }
+    }
 
+    public static int selectCustomer(Statement s) {
+        int chosenRenterID = 1;
+        try {
+            System.out.println("Does the customer already exist in the system?\n1. Yes\n0. No");
+            int existSelection = Menu.getInt();
+            if (existSelection == 1) {
+                ResultSet rs = s.executeQuery("SELECT renterID, lastname, firstname, mobile FROM renters ORDER BY renterID");
+
+                if (rs != null) {
+                    AccessingCustomerDB.printCustomerListShort(rs);
+                }
+
+                System.out.println("Enter the ID of the renter you'd like to attach to the contract");
+                chosenRenterID = Menu.getInt();
+                rs = s.executeQuery("SELECT lastname, firstname, mobile, phone, street, zip, email," +
+                        " licensenumber, driverSinceDate FROM renters WHERE renterID = " + chosenRenterID);
+                System.out.println("This is the current information of the selected renter:");
+                AccessingCustomerDB.printCustomerList(rs);
+            } else {
+                AccessingCustomerDB.createNewCustomer();
+                chosenRenterID = AccessingCustomerDB.getLastID();
             }
         } catch (SQLException sqlException) {
             System.out.println("SQLException");
             System.out.println(sqlException.getMessage());
         }
+        return chosenRenterID;
+    }
+
+    public static int selectCar() {
+        System.out.println("These are the current cars in the system:");
+        AccessingCarDB.listCars();
+        System.out.println("Please input the ID of the car you want to choose:");
+        return Menu.getInt();
     }
 
     public static void deleteContract() {
