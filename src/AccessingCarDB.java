@@ -37,7 +37,6 @@ public class AccessingCarDB {
         try {
             con = null;
             Statement s = null;
-            Class.forName(JDBC_DRIVER);
             con = DriverManager.getConnection(DATABASE_URL, "root", password);
             s = con.createStatement();
 
@@ -70,10 +69,6 @@ public class AccessingCarDB {
         } catch (SQLException sqlException) {
             System.out.println("SQLException");
             System.out.println(sqlException.getMessage());
-        } catch (ClassNotFoundException classNotFoundException) {
-            System.out.println("ClassNotFoundException");
-            System.out.println(classNotFoundException.getMessage());
-            System.exit(1);
         }
     }
 
