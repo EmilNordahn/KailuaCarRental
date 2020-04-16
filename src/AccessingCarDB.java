@@ -2,7 +2,6 @@ import java.sql.*;
 import java.util.Scanner;
 
 public class AccessingCarDB {
-    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     static final String DATABASE_URL = "jdbc:mysql://localhost:3306/kailuadatabase?serverTimezone=UTC";
     static Connection con;
     static String password;
